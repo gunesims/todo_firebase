@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_firebase/screens/add_task_screen.dart';
 
 import '../screens/home_screen.dart';
 
@@ -13,7 +14,11 @@ class Application extends StatelessWidget {
       theme: ThemeData(
         colorScheme: const ColorScheme.light(),
       ),
-      home: const HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/add_task': (context) => const AddTaskScreen(),
+      },
     );
   }
 }

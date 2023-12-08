@@ -15,6 +15,13 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.blue,
         title: const Text("Tasks"),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_task');
+        },
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
