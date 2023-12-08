@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/task_card_widget.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -14,6 +16,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text("Tasks"),
+      ),
+      body: const Padding(
+        padding: EdgeInsets.only(left: 16,right: 16),
+        child: Column(
+          children: [
+
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
