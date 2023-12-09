@@ -4,13 +4,13 @@ class InputWidget extends StatelessWidget {
   final Function() onTap;
   final Function(String) onChanged;
   final String labelText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   const InputWidget(
       {Key? key,
       required this.onTap,
       required this.onChanged,
       required this.labelText,
-      required this.controller})
+      this.controller})
       : super(key: key);
 
   @override

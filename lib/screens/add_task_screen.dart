@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-import 'package:todo_firebase/core/api/firestore_api.dart';
+import 'package:todo_firebase/core/cubits/task_cubit.dart';
 import 'package:todo_firebase/core/entity/task_entity.dart';
-import 'package:todo_firebase/locator.dart';
 import 'package:todo_firebase/main.dart';
 import 'package:todo_firebase/widgets/input_widget.dart';
 
@@ -16,25 +16,12 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   late TextEditingController controllerTitle;
   late TextEditingController controllerDescription;
-  late FirestoreApi api;
+
   @override
   void initState() {
-    _initialize();
-    super.initState();
-  }
-
-  _createTask() {
-    final taskEntity = TaskEntity(
-        id: uuid.v4(),
-        title: controllerTitle.text,
-        description: controllerDescription.text);
-    api.post(taskEntity);
-  }
-
-  _initialize() {
     controllerTitle = TextEditingController();
     controllerDescription = TextEditingController();
-    api = locator();
+    super.initState();
   }
 
   @override
@@ -73,7 +60,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            _createTask();
+            BlocProvider.of<TaskCubit>(context).createTask(TaskEntity(
+                id: uuid.v4(),
+                title: controllerTitle.text,
+                description: controllerDescription.text));
             Navigator.pop(context);
           },
           backgroundColor: Colors.blue,

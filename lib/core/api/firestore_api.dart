@@ -1,31 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:todo_firebase/core/entity/task_entity.dart';
-import 'package:todo_firebase/core/utils/firestore_constants.dart';
 
 class FirestoreApi {
   FirebaseFirestore api = FirebaseFirestore.instance;
 
-  Future<List<TaskEntity>> get() async {
+  Future<List<TaskEntity>> get({required String collection}) async {
     List<TaskEntity> listOfData = [];
 
     QuerySnapshot<Map<String, dynamic>> data =
-        await api.collection(FirestoreConstants.tTasks).get();
+        await api.collection(collection).get();
 
     for (var element in data.docs) {
-      listOfData.add(TaskEntity.fromJson(element as Map<String, dynamic>));
+      final json = element.data();
+      listOfData.add(TaskEntity.fromJson(json));
     }
+
+    debugPrint("Count tasks of list: ${listOfData.length}");
 
     return listOfData;
   }
 
-  post(TaskEntity taskEntity) async {
+  post({required TaskEntity taskEntity, required String collection}) async {
     await api
-        .collection(FirestoreConstants.tTasks)
+        .collection(collection)
         .doc(taskEntity.id)
         .set(taskEntity.toJson());
   }
 
-  delete(TaskEntity taskEntity) async {
-    await api.collection(FirestoreConstants.tTasks).doc(taskEntity.id).delete();
+
+
+  delete({required String id, required String collection}) async {
+    await api.collection(collection).doc(id).delete();
   }
 }
